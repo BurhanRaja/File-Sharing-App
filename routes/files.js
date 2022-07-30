@@ -16,19 +16,19 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({
-        storage: storage,
-        limits: {fieldSize: 1000000 * 100}
-    }).single('myfile')
+    storage: storage,
+    limits: { fieldSize: 1000000 * 100 }
+}).single('myfile')
 
 router.post('/', (req, res) => {
-    
+
     upload(req, res, async (err) => {
         if (!req.file) {
-            return res.json({ error: "All fields required "})
+            return res.json({ error: "All fields required " })
         }
 
         if (err) {
-            return res.status(500).send({error: err.message})
+            return res.status(500).send({ error: err.message })
         }
 
         const fileUpload = new File({
@@ -40,8 +40,29 @@ router.post('/', (req, res) => {
 
         const response = await fileUpload.save()
 
-        return res.send({filePath: `${config.base_URL}/files/${response.uuid}`})
+        return res.send({ filePath: `${config.base_URL}/files/${response.uuid}` })
     })
+})
+
+router.post('/send', async (req, res) => {
+    const { uuid, emailFrom, emailTo } = req.body;
+
+    if (!uuid || !emailFrom || !emailTo) {
+        return res.status(422).send({ error: "All fields are required." })
+    }
+
+    const file = await File.findOne({ uuid: uuid })
+
+    if (file.sender) {
+        return res.status(422).send({ error: "Email Already sent." })
+    }
+
+    file.sender = emailFrom
+    file.reciever = emailTo 
+    const response = await file.save()
+
+    // Send Email
+
 })
 
 module.exports = router
