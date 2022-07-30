@@ -1,15 +1,25 @@
 const router = require('express').Router()
 const File = require('../models/File')
+const config = require('../project.config')
 
 router.get('/:uuid', async (req, res) => {
-    // try {
-    //     const file = File.findOne({ uuid: req.params.uuid })
+    try {
+        const file = await File.findOne({ uuid: req.params.uuid })
         
-    //     res.download(`uploads/${file.filename}`, (err) => {
-    //         res.status(500).send({error: err.message})
-    //     })
-    // }
-    // catch (error) {
-    //     res.status(500).send({message: error.message})
-    // }
+        if (!file){
+            return res.render('download', { error : "Link is expired" })
+        }
+        
+        return res.render('download', {
+            uuid: file.uuid,
+            filename: file.filename,
+            fileSize: file.size,
+            downloadLink: `${config.base_URL}/file/download/${file.uuid}`
+        })
+    }
+    catch (error) {
+        return res.render('download', { error : "Something went wrong." })
+    }
 })
+
+module.exports = router

@@ -130,4 +130,5 @@ dist
 .pnp.*
 
 # uploads
-uploads/
+/uploads
+project.config.js
