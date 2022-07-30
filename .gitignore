@@ -131,4 +131,6 @@ dist
 
 # uploads
 /uploads
-project.config.js
+
+# config file
+config.js
