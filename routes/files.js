@@ -3,7 +3,7 @@ const path = require('path')
 const multer = require('multer')
 const File = require('../models/File')
 const { v4: uuid4 } = require('uuid')
-const config = require("../project.config")
+const config = require("../config")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
