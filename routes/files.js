@@ -3,8 +3,8 @@ const path = require('path')
 const multer = require('multer')
 const File = require('../models/File')
 const { v4: uuid4 } = require('uuid')
-const config = require("../config")
 const sendEmail = require('../services/emailService')
+require('dotenv').config()
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
 
         const response = await fileUpload.save()
 
-        return res.send({ filePath: `${config.base_URL}/files/${response.uuid}` })
+        return res.send({ filePath: `${process.env.APP_BASE_URL}/files/${response.uuid}` })
     })
 })
 
@@ -70,7 +70,7 @@ router.post('/send', async (req, res) => {
         text: `${emailFrom} has shared an email with you.`,
         html: require('../services/emailTemplate')( {
             text: `${emailFrom} has shared an email with you.`,
-            downloadLink: `${config.base_URL}/file/download/${file.uuid}`,
+            downloadLink: `${process.env.APP_BASE_URL}/file/download/${file.uuid}`,
             size: file.size,
             expires: "24 hours"
         } )

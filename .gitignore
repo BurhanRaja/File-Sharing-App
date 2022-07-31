@@ -131,6 +131,3 @@ dist
 
 # uploads
 /uploads
-
-# config file
-config.js

@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const File = require('../models/File')
-const config = require('../config')
+require('dotenv').config()
 
 router.get('/:uuid', async (req, res) => {
     try {
@@ -14,7 +14,7 @@ router.get('/:uuid', async (req, res) => {
             uuid: file.uuid,
             filename: file.filename,
             fileSize: file.size,
-            downloadLink: `${config.base_URL}/file/download/${file.uuid}`
+            downloadLink: `${process.env.APP_BASE_URL}/file/download/${file.uuid}`
         })
     }
     catch (error) {

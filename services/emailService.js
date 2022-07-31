@@ -1,14 +1,14 @@
 const mailer = require('nodemailer')
-const config = require('../config')
+require('dotenv').config()
 
 const sendEmail = async ({ from, to, subject, text, html }) => {
     const transport = mailer.createTransport({
-        host: config.SMTP_HOST,
-        port: config.SMTP_POST,
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
         secure: false,
         auth: {
-            user: config.MAIL_USER,
-            pass: config.MAIL_PASSWORD
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASSWORD
         }
     })
 

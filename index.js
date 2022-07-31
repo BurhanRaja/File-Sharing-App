@@ -22,5 +22,5 @@ app.use('/files', require("./routes/show"))
 app.use('/file/download', require('./routes/download'))
 
 app.listen(port, () => {
-    console.log(`Example app listening on port http://localhost:${port}`)
+    console.log(`Example app listening on port ${port}`)
 })
