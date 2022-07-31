@@ -8,7 +8,7 @@ connectDb()
 
 const app = express()
 const port = process.env.PORT || 5000
-socket = io.listen(process.env.PORT)
+const socket = io.listen(process.env.PORT)
 
 
 // Template Engine
