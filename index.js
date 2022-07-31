@@ -1,7 +1,7 @@
 const express = require('express')
 const connectDb = require('./config/db')
 const path = require('path')
-// const cors = require('cors')
+const cors = require('cors')
 
 connectDb()
 
@@ -15,6 +15,9 @@ app.set('view engine', 'ejs')
 
 // Use json
 app.use(express.json())
+
+// Cors
+app.use(cors())
 
 // routes
 app.use('/api/files', require("./routes/files"))
