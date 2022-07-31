@@ -9,7 +9,8 @@
     "start": "node index.js"
   },
   "keywords": [
-    "filesharing"
+    "filesharing",
+    "heroku"
   ],
   "author": "Burhan",
   "license": "ISC",
