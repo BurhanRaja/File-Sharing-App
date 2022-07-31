@@ -2,14 +2,12 @@ const express = require('express')
 const connectDb = require('./config/db')
 const path = require('path')
 const cors = require('cors')
-const io = require('io')
 require('dotenv').config()
 
 connectDb()
 
 const app = express()
 const port = process.env.PORT || 5000
-const socket = io.listen(process.env.PORT)
 
 
 // Template Engine
