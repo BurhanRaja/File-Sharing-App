@@ -4,6 +4,7 @@ const multer = require('multer')
 const File = require('../models/File')
 const { v4: uuid4 } = require('uuid')
 const config = require("../config")
+const sendEmail = require('../services/emailService')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -62,6 +63,20 @@ router.post('/send', async (req, res) => {
     const response = await file.save()
 
     // Send Email
+    sendEmail({
+        from: emailFrom,
+        to: emailTo,
+        subject: 'ImageShare',
+        text: `${emailFrom} has shared an email with you.`,
+        html: require('../services/emailTemplate')( {
+            text: `${emailFrom} has shared an email with you.`,
+            downloadLink: `${config.base_URL}/file/download/${file.uuid}`,
+            size: file.size,
+            expires: "24 hours"
+        } )
+    })
+
+    return res.send({ success: true })
 
 })
 

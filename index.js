@@ -8,13 +8,13 @@ connectDb()
 const app = express()
 const port = 5000
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
 
 // Template Engine
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs')
+
+// Use json
+app.use(express.json())
 
 // routes
 app.use('/api/files', require("./routes/files"))
