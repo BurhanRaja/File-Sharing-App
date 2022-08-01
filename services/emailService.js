@@ -13,7 +13,7 @@ const sendEmail = async ({ from, to, subject, text, html }) => {
     })
 
     const info = await transport.sendMail({
-        from: `imageShare <${from}>`, to, subject, text, html
+        from: `fileShare <${from}>`, to, subject, text, html
     })
 }
 
