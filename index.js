@@ -25,6 +25,16 @@ app.use('/api/files', require("./routes/files"))
 app.use('/files', require("./routes/show"))
 app.use('/file/download', require('./routes/download'))
 
+
+// Docs
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require("swagger-jsdoc");
+const options = require('./docs')
+
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
