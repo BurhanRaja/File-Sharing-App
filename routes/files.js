@@ -7,37 +7,6 @@ const sendEmail = require('../services/emailService')
 require('dotenv').config()
 
 
-/**
- * @swagger
- * /api/files:
- *   post:
- *     summary: Create a JSONPlaceholder user.
- *     requestBody:
- *       required: true
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: string
- *             format: base64
- *             properties:
- *               name:
- *                 type: string
- *                 example: myfile
- *     responses:
- *       201:
- *         description: Created
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 filePath:
- *                   type: string
- *                   description: The user's name.
- *                   example: Leanne Graham
-*/
-
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/')
@@ -73,7 +42,10 @@ router.post('/', (req, res) => {
 
         const response = await fileUpload.save()
 
-        return res.send({ filePath: `${process.env.APP_BASE_URL}/files/${response.uuid}` })
+        return res.render('pathsToDownload', { 
+            filePath: `${process.env.APP_BASE_URL}/files/${response.uuid}`,
+            uuid: response.uuid,
+        })
     })
 })
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <section class="downloadSection">
+
+        <section class="downloadSection">
+
+            <% if (locals.error) { %>
+                <h4>
+                    <%= locals.error %>
+                </h4>
+
+                <% } else { %>
+
+                    <div class="send-download">
+
+                        <div class="downloadLink">
+                            <a href="<%= filePath %>">
+                                <%= filePath %>
+                            </a>
+                        </div>
+                        <p>OR</p>
+                        <div class="send-email">
+                            <!-- <form>
+                                <input type="text" value="<%= uuid %>" name="uuid" id="uuid">
+
+                                <label for="emailFrom">Sender</label>
+                                <input type="email" name="emailFrom" id="emailFrom">
+
+                                <label for="emailTo">Receiver</label>
+                                <input type="email" name="emailTo" id="emailTo">
+
+                                <button onclick={handleSubmit} type="submit" id="send-btn">Submit</button>
+                            </form> -->
+
+                        </div>
+                    </div>
+
+                    <% } %>
+        </section>
+
+    </section>
+
+    <script>
+
+        const inputSenderEl = document.getElementById('emailFrom')
+        const inputReceiverEl = document.getElementById('emailTo')
+        const inputUuidEl = document.getElementById('uuid')
+
+        let data = {
+                uuid: inputUuidEl.value,
+                emailFrom: inputSenderEl.value,
+                emailTo: inputReceiverEl.value
+            }
+        data = JSON.stringify(data)
+        
+        const handleSubmit = async () => {
+            const response = await fetch('http://localhost/api/files/send', {
+                method:'POST',
+                headers:{
+                    'Content-type':"application/json",
+                },
+                body: data
+            })
+            
+        }
+        
+        console.log(data)
+    </script>
+</body>
+
+</html>
